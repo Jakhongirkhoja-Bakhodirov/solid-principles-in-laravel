@@ -24,31 +24,11 @@ class InvoiceController extends Controller
         return view('invoices.create', compact('products'));
     }
 
-    public function store_old(Request $request)
+    public function store_old(StoreInvoiceRequest $request, InvoiceService $service)
     {
-        $invoice_data = $request->validate([
-            'invoice_date' => 'required|date',
-            'customer_name' => 'required',
-            'products' => 'required|array',
-            'quantities' => 'required|array',
-            'prices' => 'required|array',
-        ]);
-
         $invoice_data['invoice_number'] = Invoice::max('invoice_number') + 1;
 
-        $invoice = Invoice::create($invoice_data);
-
-        $products = $request->products;
-        $quantities = $request->quantities;
-        $prices = $request->prices;
-        for ($i=0; $i < count($products); $i++) {
-            if (isset($products[$i]) && $products[$i] != '' && $quantities[$i] != '' && $prices[$i] != '') {
-                $invoice->products()->attach($products[$i], [
-                    'quantity' => $quantities[$i],
-                    'price' => $prices[$i]
-                ]);
-            }
-        }
+        $invoice = $service->storeNewInvoice($request->invoice_data, $request->customer_name, $request->products, $request->quantities, $request->prices);
 
         return redirect()->route('invoices.index')
             ->withMessage('Invoice #' . $invoice->invoice_number . ' created successfully');
