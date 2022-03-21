@@ -34,6 +34,9 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('staff.index') }}">{{ __('All Staffs') }}</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('invoices.index') }}">{{ __('All Invoices') }}</a>
                         </li>
                         <li class="nav-item">

@@ -21,7 +21,6 @@ class CreateEmployeesTable extends Migration
             $table->string('email');
             $table->string('job_title')->default(JobTitle::class);
             $table->timestamp('start_date');
-            $table->float('salary');
             $table->timestamps();
         });
     }

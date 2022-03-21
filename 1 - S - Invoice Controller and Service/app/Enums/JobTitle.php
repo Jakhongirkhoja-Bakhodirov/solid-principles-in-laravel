@@ -13,5 +13,5 @@ final class JobTitle extends Enum
 {
     const CTO = 'CTO';
     const CEO = 'CEO';
-    const DEVELOPER = 'DEVELOPER';
+    const DEVELOPER = 'Developer';
 }

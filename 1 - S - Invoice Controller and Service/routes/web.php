@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,20 +17,30 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', 'invoices');
 
 // "Old" routes - before refactoring for Single Responsibility Principle
-Route::get('invoices/report_month',
-    [\App\Http\Controllers\InvoiceController::class, 'reportByMonth'])
+Route::get(
+    'invoices/report_month',
+    [\App\Http\Controllers\InvoiceController::class, 'reportByMonth']
+)
     ->name('invoices.report_month');
-Route::get('invoices/report_product',
-    [\App\Http\Controllers\InvoiceController::class, 'reportByProduct'])
+Route::get(
+    'invoices/report_product',
+    [\App\Http\Controllers\InvoiceController::class, 'reportByProduct']
+)
     ->name('invoices.report_product');
 
 // "New" Better routes for reports - with SOLID principle
-Route::get('reports/invoices/month/{format?}',
-    [\App\Http\Controllers\Reports\InvoiceReportController::class, 'reportByMonth'])
+Route::get(
+    'reports/invoices/month/{format?}',
+    [\App\Http\Controllers\Reports\InvoiceReportController::class, 'reportByMonth']
+)
     ->name('reports.invoices.month');
-Route::get('reports/invoices/product/{format?}',
-    [\App\Http\Controllers\Reports\InvoiceReportController::class, 'reportByProduct'])
+Route::get(
+    'reports/invoices/product/{format?}',
+    [\App\Http\Controllers\Reports\InvoiceReportController::class, 'reportByProduct']
+)
     ->name('reports.invoices.product');
+
+Route::get('/staffs', [EmployeeController::class, 'index'])->name('staff.index');
 
 Route::resource('invoices', \App\Http\Controllers\InvoiceController::class)
     ->only('index', 'create', 'store');
